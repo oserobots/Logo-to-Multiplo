@@ -1,0 +1,116 @@
+to drive
+while [1 < 2] [
+sense ifelse (item 1 :sense1) >250
+[motor 100 40 4]
+[motor 40 100 4]]
+end
+
+to eraserobot; erase your robot by redrawing with white
+setpensize [4 4] 
+robot [255 255 255] [255 255 255]
+setpensize [1 1]
+end
+
+to motor :l :r :t
+repeat round(:t)[ 
+lt arctan((:r-:l)/26)/100
+fd (:l+:r)/200
+robo
+wait 1
+eraserobot]
+robo
+end
+
+to rectangle :l :w ;I use this to build the tracks for my tank robot
+rt 90
+fd :w/2
+lt 90
+fd :l
+lt 90
+fd :w
+lt 90
+fd :l
+lt 90
+fd :w/2
+lt 90
+end
+
+to robo; here is my read-headed robot
+robot [0 0 0] [255 0 0]
+end
+
+to robot :color1 :color2;;;;;;;;;;;;
+setpc :color1; set thecolor for the body
+
+pu
+rt 90
+fd 14
+pd
+rectangle 3 8; right track
+pu
+bk 28
+rt 180
+pd
+rectangle 3 8; left track
+pu
+bk 14
+rt 90
+;back at start
+pd
+rectangle 10 20
+;back at start
+pu
+fd 10
+pd
+square 5
+
+rt 90
+fd 10
+lt 90
+fd 6
+rt 90
+setpc :color2
+square 2
+rt 180
+square 2
+pu
+rt 90
+bk 16
+lt 90
+fd 10
+rt 90
+; back to start
+setpc :color1
+
+
+
+setpc [0 0 0]
+end;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+to sense
+pu
+fd 20 
+rt 90
+fd 8
+make "sense1 pixel
+fd 4
+make "sense2 pixel
+back 12
+lt 90
+back 20  
+end
+
+to square :size; for robot head
+rt 90
+fd :size/2
+repeat 3 [lt 90 fd :size]
+lt 90
+fd :size/2
+lt 90
+end
+
+Make "l 40
+Make "r 100
+Make "sense1 [0 0 0]
+Make "sense2 [0 0 0]
+Make "t 4
