@@ -1,0 +1,164 @@
+to asense
+setpensize [1 1]
+Make "sen [255 255 255]
+Make "dis 0
+setpc [255 50 10]
+pd
+while [(item 1 :sen) > 250] [fd 1 Make "sen pixel Make "dis :dis+1]
+setpixel [0 0 0]
+pu
+back :dis
+output :dis
+end
+
+to bsense
+pu
+fd 12
+Make "s1 0
+Make "s2 0
+Make "s3 0
+rt 60
+Make "s1 asense
+lt 60
+Make "s2 asense
+lt 60
+Make "s3 asense
+rt 60
+back 12
+end
+
+to drive1
+
+while [1<2] [
+bsense ifelse :s1 > 25 [
+motor 100 20 4] [
+motor 20 100 4]]
+end
+
+to drive2
+turnr 180
+gofd 20
+turnr 63
+gofd 340
+
+turnl 3
+gofd 100
+
+turnr 116
+gofd 128
+turnr 89
+gofd 30
+
+turnl 90
+
+gofd 135
+turnr 65
+;
+gofd 300
+
+turnl 2
+gofd 110
+
+turnr 117
+gofd 250
+end
+
+to eraserobot
+setpensize (list 4 4)
+robot [255 255 255] [255 255 255]
+setpensize (list 1 1)
+end
+
+to gofd :distance
+motor 100 100 :distance
+end
+
+to motor :l :r :d
+repeat round(:d)[ 
+lt arctan((:r-:l)/26)/100
+fd (:l+:r)/200
+setpensize [1 1]
+robo
+wait 1
+eraserobot
+]
+robo
+end
+
+to robo
+robot [0 0 0] [255 0 0]
+end
+
+to robot :c1 :c2
+pu
+fd -10
+setpc :c1
+pd
+square 20
+pu
+rt 90
+fd 14
+lt 90
+pd
+wheel 17
+pu 
+lt 90
+fd 28
+rt 90
+pd
+wheel 17
+pu
+rt 90
+fd 14
+lt 90
+
+fd 14
+setpc :c2
+pd
+square 5
+pu
+bk 15
+setpc :c1
+fd 11
+pd
+end
+
+to square :n
+rt 90
+fd :n/2
+repeat 3 [lt 90
+fd :n]
+lt 90
+fd :n/2
+lt 90
+end
+
+to turnl :degree
+motor -50 50 round (:degree*41/90)
+end
+
+to turnr :degree
+motor 50 -50 round (:degree*41/90)
+end
+
+to wheel :s
+square 3
+pu
+fd :s
+pd
+square 3
+pu
+bk :s
+pd
+end
+
+Make "bob {255 255 255}
+Make "d 125
+Make "dis 14
+Make "distance 125
+Make "l 100
+Make "r 100
+Make "s1 26
+Make "s2 0
+Make "s3 0
+Make "sen [255 50 10]
